@@ -1,0 +1,44 @@
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Geo FInal Carlos</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link href="https://developers.google.com/maps/documentation/javascript/examples/default.css" rel="stylesheet">
+    <script type="text/javascript" src="phonegap.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
+    <script type="text/javascript">
+	
+		function initialize() {//este no se ha cerrado {1)
+				document.addEventListener("online",function(){//{2) 1
+					if(navigator.network.connection.type == "wifi"){//{3)
+						navigator.geolocation.getCurrentPosition(function(position){//{4) 2
+							var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+							var myOptions = {//{5)
+								zoom: 18,
+								center: latlng,
+								mapTypeId: google.maps.MapTypeId.ROADMAP 
+							};//(1}
+							var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+							var marker = new google.maps.Marker({//{6) 3
+								position: latlng, 
+								map: map, 
+								title:"Aqui andas!"
+							});//(2} -1
+						});//(3} -2
+					}else{//{7) (4}
+						navigator.notification.alert("Debe estar conectado por WIFI", function(){ }, "Práctica 4", "Aceptar");	
+					}//(5}
+				}, false);//(6} -3
+		//	},false);//(7} -4 Quite este por que aqui estaba el error de sintaxix
+		}//(8}
+    </script>
+  </head>
+  <body onload="initialize()">
+    <div id="map_canvas" style="width:100%; height:100%"></div>
+  </body>
+</html>	
+
+
